@@ -6,7 +6,7 @@ class DataCapture:
         Initialize an array to store the counts of each number.
         The size is set to 1000.
         """
-        self.SIZE: int = 10
+        self.SIZE: int = 1000
         self.data: list[int] = [0] * self.SIZE
 
     def add(self, number: int) -> None:
@@ -23,13 +23,13 @@ class DataCapture:
                 f"Number need to be greater than 0 and less than {len(self.data)}"
             )
 
-        def build_stats(self) -> "Stats":
-            """
-            Create and return a Stats object using the current data.
+    def build_stats(self) -> "Stats":
+        """
+        Create and return a Stats object using the current data.
 
-            :return: A Stats object for querying statistics.
-            """
-            return Stats(self.data)
+        :return: A Stats object for querying statistics.
+        """
+        return Stats(self.data)
 
 
 class Stats:
@@ -58,8 +58,6 @@ class Stats:
             cumulative_counts_below.append(count)
             count += num
 
-        print(cumulative_counts_below)
-
         return cumulative_counts_below
 
     def _precompute_greater(self) -> list[int]:
@@ -74,7 +72,6 @@ class Stats:
             cumulative_counts_above.insert(0, count)
             count += num
 
-        print(cumulative_counts_above)
         return cumulative_counts_above
 
     def less(self, threshold: int) -> int:
@@ -94,3 +91,22 @@ class Stats:
         :return: Count of numbers greater than the threshold.
         """
         return self.cumulative_counts_above[threshold]
+
+    def between(self, lower: int, upper: int) -> int:
+        """
+        Return the number of elements between the lower and upper bounds, inclusive.
+
+        :param lower: The lower bound.
+        :param upper: The upper bound.
+        :return: Count of numbers in the inclusive range [lower, upper].
+        """
+        if lower == 0:
+            # Include the count at 'upper' as the range is inclusive
+            return self.cumulative_counts_below[upper] + self.data[upper]
+
+        # Calculate the count in the range [lower, upper], inclusive
+        return (
+            self.cumulative_counts_below[upper]
+            - self.cumulative_counts_below[lower]
+            + self.data[upper]
+        )
