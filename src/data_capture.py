@@ -72,10 +72,10 @@ class Stats:
         :return: A list of cumulative counts of numbers greater than each index.
         """
         count: int = 0
-        cumulative_counts_above: list[int] = []
-        for value in reversed(self.data):
-            cumulative_counts_above.insert(0, count)
-            count += value
+        cumulative_counts_above: list[int] = [0] * len(self.data)
+        for index in range(len(self.data) - 1, -1, -1):
+            cumulative_counts_above[index] = count
+            count += self.data[index]
 
         return cumulative_counts_above
 
