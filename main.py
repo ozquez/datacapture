@@ -22,3 +22,41 @@ class DataCapture:
             raise ValueError(
                 f"Number need to be greater than 0 and less than {len(self.data)}"
             )
+
+        def build_stats(self) -> "Stats":
+            """
+            Create and return a Stats object using the current data.
+
+            :return: A Stats object for querying statistics.
+            """
+            return Stats(self.data)
+
+
+class Stats:
+    """Class to provide statistical analysis of DataCapture."""
+
+    def __init__(self, data: list[int]) -> None:
+        """
+        Initialize the Stats object with the given data.
+        Precompute the cumulative counts for efficient querying.
+
+        :param data: The data from the DataCapture object.
+        """
+        self.data: list[int] = data
+        self.cumulative_counts_below: list[int] = self._precompute_less()
+
+    def _precompute_less(self) -> list[int]:
+        """
+        Precompute the count of numbers less than each index.
+
+        :return: A list of cumulative counts of numbers less than each index.
+        """
+        count: int = 0
+        cumulative_counts_below: list[int] = []
+        for num in self.data:
+            cumulative_counts_below.append(count)
+            count += num
+
+        print(cumulative_counts_below)
+
+        return cumulative_counts_below
