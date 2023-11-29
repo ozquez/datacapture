@@ -7,12 +7,12 @@ The `build_stats` method, which is responsible for preparing the data for O(1) q
 
 - **Single Pass**: The method makes a single pass over the array of counts to compute the cumulative_counts_below and cumulative_counts_above lists, which means it goes through the data only once.
 
-- **Optimized Insertion**: To build the cumulative_counts_above list, the method traverses the data array in reverse, prepending the running count to the list. Although list insertion at the beginning is generally O(n)
+- **Optimized Insertion**: The `cumulative_counts_above` list is done in reverse order, populating a pre-allocated list to maintain O(n) complexity.
 
 
 #### Query Operations O(1) 
 
-The methods `less`, `greater`, and `between` are designed to run in O(1) time. This is accomplished through the following strategies:
+The methods `less`, `greater`, and `between` are designed to run in O(1) time and this is accomplished through the following strategies:
 
 - **Precomputed Access**: These methods use the precomputed cumulative_counts_below and cumulative_counts_above arrays to return results in constant time.
 
