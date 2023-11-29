@@ -44,6 +44,7 @@ class Stats:
         """
         self.data: list[int] = data
         self.cumulative_counts_below: list[int] = self._precompute_less()
+        self.cumulative_counts_above: list[int] = self._precompute_greater()
 
     def _precompute_less(self) -> list[int]:
         """
@@ -60,3 +61,18 @@ class Stats:
         print(cumulative_counts_below)
 
         return cumulative_counts_below
+
+    def _precompute_greater(self) -> list[int]:
+        """
+        Precompute the count of numbers greater than each index.
+
+        :return: A list of cumulative counts of numbers greater than each index.
+        """
+        count: int = 0
+        cumulative_counts_above: list[int] = []
+        for num in reversed(self.data):
+            cumulative_counts_above.insert(0, count)
+            count += num
+
+        print(cumulative_counts_above)
+        return cumulative_counts_above
