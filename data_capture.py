@@ -4,12 +4,13 @@ class DataCapture:
     provides a method to increment the count at a specified index.
     """
 
+    SIZE: int = 1000
+
     def __init__(self) -> None:
         """
-        Initialize an array to store the counts of each number.
+        Initializes an array to store the counts of each number.
         The size is set to 1000.
         """
-        self.SIZE: int = 1000
         self.data: list[int] = [0] * self.SIZE
 
     def add(self, number: int) -> None:
@@ -57,9 +58,9 @@ class Stats:
         """
         count: int = 0
         cumulative_counts_below: list[int] = []
-        for num in self.data:
+        for value in self.data:
             cumulative_counts_below.append(count)
-            count += num
+            count += value
 
         return cumulative_counts_below
 
@@ -71,9 +72,9 @@ class Stats:
         """
         count: int = 0
         cumulative_counts_above: list[int] = []
-        for num in reversed(self.data):
+        for value in reversed(self.data):
             cumulative_counts_above.insert(0, count)
-            count += num
+            count += value
 
         return cumulative_counts_above
 
@@ -105,11 +106,7 @@ class Stats:
         """
         if lower == 0:
             # Include the count at 'upper' as the range is inclusive
-            return self.cumulative_counts_below[upper] + self.data[upper]
+            return self.less(upper) + self.data[upper]
 
         # Calculate the count in the range [lower, upper], inclusive
-        return (
-            self.cumulative_counts_below[upper]
-            - self.cumulative_counts_below[lower]
-            + self.data[upper]
-        )
+        return self.less(upper) - self.less(lower) + self.data[upper]
