@@ -76,3 +76,21 @@ class Stats:
 
         print(cumulative_counts_above)
         return cumulative_counts_above
+
+    def less(self, threshold: int) -> int:
+        """
+        Return the number of elements less than the given threshold.
+
+        :param threshold: The threshold value.
+        :return: Count of numbers less than the threshold.
+        """
+        return self.cumulative_counts_below[threshold]
+
+    def greater(self, threshold: int) -> int:
+        """
+        Return the number of elements greater than the given threshold.
+
+        :param threshold: The threshold value.
+        :return: Count of numbers greater than the threshold.
+        """
+        return self.cumulative_counts_above[threshold]
