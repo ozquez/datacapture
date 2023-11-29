@@ -1,5 +1,8 @@
 class DataCapture:
-    """Class to capture and store data for statistical analysis."""
+    """
+    Initializes an array to store each number's count and
+    provides a method to increment the count at a specified index.
+    """
 
     def __init__(self) -> None:
         """
