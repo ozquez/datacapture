@@ -16,11 +16,12 @@ class DataCapture:
     def add(self, number: int) -> None:
         """
         Increments the value at the specified index in the data list by 1.
+        Accepts only positive numbers integers.
 
         :param number: The index of the element to be incremented.
         :raises ValueError: If the number is outside the valid range.
         """
-        if 0 <= number < len(self.data):
+        if 1 <= number < len(self.data):
             self.data[number] += 1
         else:
             raise ValueError(
@@ -104,9 +105,11 @@ class Stats:
         :param upper: The upper bound.
         :return: Count of numbers in the inclusive range [lower, upper].
         """
-        if lower == 0:
-            # Include the count at 'upper' as the range is inclusive
-            return self.less(upper) + self.data[upper]
 
-        # Calculate the count in the range [lower, upper], inclusive
-        return self.less(upper) - self.less(lower) + self.data[upper]
+        # Count numbers less than or equal to 'upper'
+        upper_count = self.less(upper + 1)
+
+        # Count numbers strictly less than 'lower'
+        lower_count = self.less(lower)
+
+        return upper_count - lower_count
