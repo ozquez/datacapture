@@ -1,5 +1,5 @@
 import unittest
-from data_capture import DataCapture
+from src.data_capture import DataCapture
 
 
 class TestDataCapture(unittest.TestCase):
