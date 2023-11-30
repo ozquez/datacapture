@@ -1,6 +1,6 @@
 # DataCapture
 
-The `DataCapture` module is designed to record small positive integers and provide quick statistical analysis. The module is optimized to achieve constant time complexity (O(1)) for querying statistics and linear time complexity (O(n)) for the build_stats operation.
+The `DataCapture` module is designed to collect and analyze numerical data. The module is optimized to achieve constant time complexity O(1) for querying statistics and linear time complexity O(n) for the build_stats operation.
 
 #### Build Stats Operation O(n) 
 The `build_stats` method, which is responsible for preparing the data for O(1) queries, operates in linear time O(n). Here's how it achieves this:
