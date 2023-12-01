@@ -48,8 +48,8 @@ class Stats:
         :param data: The data from the DataCapture object.
         """
         self.data: list[int] = data
+        self.total_count: int = sum(self.data)
         self.cumulative_counts_below: list[int] = self._precompute_less()
-        self.cumulative_counts_above: list[int] = self._precompute_greater()
 
     def _precompute_less(self) -> list[int]:
         """
@@ -64,20 +64,6 @@ class Stats:
             count += value
 
         return cumulative_counts_below
-
-    def _precompute_greater(self) -> list[int]:
-        """
-        Precompute the count of numbers greater than each index.
-
-        :return: A list of cumulative counts of numbers greater than each index.
-        """
-        count: int = 0
-        cumulative_counts_above: list[int] = [0] * len(self.data)
-        for index in range(len(self.data) - 1, -1, -1):
-            cumulative_counts_above[index] = count
-            count += self.data[index]
-
-        return cumulative_counts_above
 
     def less(self, threshold: int) -> int:
         """
@@ -117,7 +103,7 @@ class Stats:
                 f"Threshold need to be greater than 0 and less or equal to {len(self.data)}"
             )
 
-        return self.cumulative_counts_above[threshold]
+        return self.total_count - self.less(threshold + 1)
 
     def between(self, lower: int, upper: int) -> int:
         """
