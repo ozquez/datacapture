@@ -48,8 +48,9 @@ class Stats:
         :param data: The data from the DataCapture object.
         """
         self.data: list[int] = data
-        self.total_count: int = sum(self.data)
         self.cumulative_counts_below: list[int] = self._precompute_less()
+        self.total_count: int = self.cumulative_counts_below[-1] + self.data[-1]
+
 
     def _precompute_less(self) -> list[int]:
         """
