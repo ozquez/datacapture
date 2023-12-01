@@ -21,7 +21,7 @@ class DataCapture:
         :param number: The index of the element to be incremented.
         :raises ValueError: If the number is outside the valid range.
         """
-        if 1 <= number < len(self.data):
+        if 0 < number <= len(self.data):
             self.data[number] += 1
         else:
             raise ValueError(

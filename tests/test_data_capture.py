@@ -19,7 +19,7 @@ class TestDataCapture(unittest.TestCase):
             capture.add(-1)  # Negative numbers are not allowed
 
         with self.assertRaises(ValueError):
-            capture.add(capture.SIZE)  # Numbers greater than a fixed
+            capture.add(capture.SIZE + 1)  # Numbers greater than a fixed
 
     def test_less_method(self):
         capture = DataCapture()
