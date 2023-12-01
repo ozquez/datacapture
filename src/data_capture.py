@@ -25,7 +25,7 @@ class DataCapture:
             self.data[number] += 1
         else:
             raise ValueError(
-                f"Number need to be greater than 0 and less than {len(self.data)}"
+                f"Number need to be greater than 0 and less or equal to {len(self.data)}"
             )
 
     def build_stats(self) -> "Stats":
@@ -86,6 +86,17 @@ class Stats:
         :param threshold: The threshold value.
         :return: Count of numbers less than the threshold.
         """
+
+        # Check if threshold is a integer
+        if not isinstance(threshold, int):
+            raise ValueError("Threshold need to be an integer")
+
+        # Check if threshold is in the valid range
+        if not (0 < threshold <= len(self.data)):
+            raise ValueError(
+                f"Threshold need to be greater than 0 and less or equal to {len(self.data)}"
+            )
+
         return self.cumulative_counts_below[threshold]
 
     def greater(self, threshold: int) -> int:
@@ -95,6 +106,17 @@ class Stats:
         :param threshold: The threshold value.
         :return: Count of numbers greater than the threshold.
         """
+
+        # Check if threshold is a integer
+        if not isinstance(threshold, int):
+            raise ValueError("Threshold need to be an integer")
+
+        # Check if threshold is in the valid range
+        if not (0 < threshold <= len(self.data)):
+            raise ValueError(
+                f"Threshold need to be greater than 0 and less or equal to {len(self.data)}"
+            )
+
         return self.cumulative_counts_above[threshold]
 
     def between(self, lower: int, upper: int) -> int:
@@ -105,6 +127,16 @@ class Stats:
         :param upper: The upper bound.
         :return: Count of numbers in the inclusive range [lower, upper].
         """
+
+        # Check if lower and upper are integers
+        if not isinstance(lower, int) or not isinstance(upper, int):
+            raise ValueError("lower and upper need to be integers")
+
+        # Check if lower and upper are in the valid range
+        if not (0 < lower <= len(self.data)) or not (0 < upper <= len(self.data)):
+            raise ValueError(
+                f"lower and upper need to be greater than 0 and less or equal to {len(self.data)}"
+            )
 
         # Count numbers less than or equal to 'upper'
         upper_count = self.less(upper + 1)
