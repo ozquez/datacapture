@@ -51,7 +51,6 @@ class Stats:
         self.cumulative_counts_below: list[int] = self._precompute_less()
         self.total_count: int = self.cumulative_counts_below[-1] + self.data[-1]
 
-
     def _precompute_less(self) -> list[int]:
         """
         Precompute the count of numbers less than each index.
@@ -66,6 +65,22 @@ class Stats:
 
         return cumulative_counts_below
 
+    def _validate_threshold(self, threshold: int):
+        """
+        Validates the threshold.
+
+        :param threshold: The value to be validated.
+        :raises ValueError: If the threshold is not an integer or is out of the valid range.
+        """
+
+        if not isinstance(threshold, int):
+            raise ValueError("Threshold must be an integer")
+
+        if not (0 < threshold <= len(self.data)):
+            raise ValueError(
+                f"Threshold must be greater than 0 and less or equal to {len(self.data)}"
+            )
+
     def less(self, threshold: int) -> int:
         """
         Return the number of elements less than the given threshold.
@@ -73,17 +88,7 @@ class Stats:
         :param threshold: The threshold value.
         :return: Count of numbers less than the threshold.
         """
-
-        # Check if threshold is a integer
-        if not isinstance(threshold, int):
-            raise ValueError("Threshold need to be an integer")
-
-        # Check if threshold is in the valid range
-        if not (0 < threshold <= len(self.data)):
-            raise ValueError(
-                f"Threshold need to be greater than 0 and less or equal to {len(self.data)}"
-            )
-
+        self._validate_threshold(threshold)
         return self.cumulative_counts_below[threshold]
 
     def greater(self, threshold: int) -> int:
@@ -93,17 +98,7 @@ class Stats:
         :param threshold: The threshold value.
         :return: Count of numbers greater than the threshold.
         """
-
-        # Check if threshold is a integer
-        if not isinstance(threshold, int):
-            raise ValueError("Threshold need to be an integer")
-
-        # Check if threshold is in the valid range
-        if not (0 < threshold <= len(self.data)):
-            raise ValueError(
-                f"Threshold need to be greater than 0 and less or equal to {len(self.data)}"
-            )
-
+        self._validate_threshold(threshold)
         return self.total_count - self.less(threshold + 1)
 
     def between(self, lower: int, upper: int) -> int:
@@ -114,16 +109,8 @@ class Stats:
         :param upper: The upper bound.
         :return: Count of numbers in the inclusive range [lower, upper].
         """
-
-        # Check if lower and upper are integers
-        if not isinstance(lower, int) or not isinstance(upper, int):
-            raise ValueError("lower and upper need to be integers")
-
-        # Check if lower and upper are in the valid range
-        if not (0 < lower <= len(self.data)) or not (0 < upper <= len(self.data)):
-            raise ValueError(
-                f"lower and upper need to be greater than 0 and less or equal to {len(self.data)}"
-            )
+        self._validate_threshold(lower)
+        self._validate_threshold(upper)
 
         # Count numbers less than or equal to 'upper'
         upper_count = self.less(upper + 1)
